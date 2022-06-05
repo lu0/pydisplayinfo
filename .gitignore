@@ -1,0 +1,13 @@
+.python-version
+venv/
+
+.pytest_cache/
+report-tests.xml
+
+*.pyc
+*.swp
+*.egg
+.eggs/
+*.egg-info/
+
+.pre-commit.log

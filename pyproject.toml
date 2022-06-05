@@ -1,0 +1,10 @@
+[tool.isort]
+profile = "black"
+src_paths = ["pydisplayinfo"]
+honor_noqa = true
+
+[tool.pytest.ini_options]
+addopts = "--doctest-modules --verbosity=2 --junit-xml=report-tests.xml"
+doctest_optionflags = "NORMALIZE_WHITESPACE ELLIPSIS"
+minversion = "7.1.2"
+testpaths = ["tests", "pydisplayinfo"]
