@@ -1,11 +1,4 @@
 repos:
-  - repo: local
-    hooks:
-      - id: clean-pre-commit-log
-        name: clean-pre-commit-log
-        language: script
-        entry: /usr/bin/env make clean-pre-commit-log
-        description: "Clean .pre-commit.log file"
 
   - repo: https://github.com/asottile/pyupgrade
     rev: v2.31.1
@@ -48,9 +41,19 @@ repos:
     hooks:
       - id: test
         name: test-pydisplayinfo
+        description: "Run test cases if previous hooks passed"
+        files: "^(pydisplayinfo/|tests/).*$"
+        entry: bash -c "if [ -f '.pre-commit.log' ]; then echo 'Solve previous hooks'; exit 1; else make test; fi"
         language: system
-        entry: "/usr/bin/env make test"
-        description: "Run test cases"
-        files: "^(pydisplayinfo/|tests/test_).*.py"
         pass_filenames: false
         verbose: True
+
+  - repo: local
+    hooks:
+      - id: clean-log
+        name: clean-log
+        description: "Clean pre-commit log file"
+        entry: rm -f ".pre-commit.log"
+        language: system
+        pass_filenames: false
+        always_run: true
