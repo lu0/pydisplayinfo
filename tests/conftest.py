@@ -1,7 +1,15 @@
+from argparse import ArgumentParser
+
 import pytest
 from tests.utils import MockScreen, move_mouse
 
 from pydisplayinfo import DisplayInfo
+from pydisplayinfo import __main__ as command_display_info
+
+
+@pytest.fixture()
+def cli_parser() -> ArgumentParser:
+    return command_display_info.create_arg_parser()
 
 
 @pytest.fixture()
