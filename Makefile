@@ -2,7 +2,7 @@ init:
 	virtualenv venv && \
 	. venv/bin/activate && \
 	pip install -r requirements-dev.txt && \
-	pre-commit install
+	pre-commit install -t pre-commit -t pre-push
 
 test:
 	pytest
