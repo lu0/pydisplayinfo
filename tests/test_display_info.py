@@ -1,22 +1,11 @@
 import logging
 
-import pytest
-from tests.utils import MockScreen, move_mouse
+from tests.utils import MockScreen
 
 from pydisplayinfo import DisplayInfo
 
 log = logging.getLogger()
 log.setLevel(level=logging.INFO)
-
-
-@pytest.fixture()
-def display_info() -> DisplayInfo:
-    move_mouse(MockScreen.mouse_x, MockScreen.mouse_y)
-    info = DisplayInfo()
-    info._test = True
-    info._initial_dimensions = (MockScreen.width, MockScreen.height)
-    yield info
-    info._window.destroy()
 
 
 class TestDisplayInfo:
