@@ -89,6 +89,13 @@ setup(
         "Topic :: Desktop Environment :: Window Managers",
     ],
     cmdclass={"test": Test},
+    entry_points=dict(
+        console_scripts=[
+            "pydisplayinfo = pydisplayinfo.__main__:main",
+            "displayinfo = pydisplayinfo.__main__:main",
+            "display_info = pydisplayinfo.__main__:main",
+        ]
+    ),
     project_urls={
         "Source Code": package_info["__url__"],
         "E-mail": package_info["__author_email__"],
