@@ -8,3 +8,5 @@
 :author: Lucero Alvarado Ruiz.
 :license: GPLv3.
 """
+
+from .display_info import DisplayInfo
