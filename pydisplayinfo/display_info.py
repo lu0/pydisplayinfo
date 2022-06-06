@@ -1,5 +1,5 @@
 from tkinter import Tk
-from typing import Tuple
+from typing import Dict
 
 
 class DisplayInfo:
@@ -30,6 +30,6 @@ class DisplayInfo:
     def resolution(self):
         raise NotImplementedError
 
-    @property
-    def all(self) -> Tuple:
+    @classmethod
+    def all(cls) -> Dict:
         raise NotImplementedError

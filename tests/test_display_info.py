@@ -36,10 +36,10 @@ class TestDisplayInfo:
         assert display_info.height == MockScreen.height
 
     def test_summarized_info(self, display_info: DisplayInfo):
-        assert display_info.all == dict(
-            resolution=f"{MockScreen.width}x{MockScreen.height}",
-            offset_x=f"{MockScreen.mouse_x}",
-            offset_y=f"{MockScreen.mouse_y}",
-            res_x=f"{MockScreen.width}",
-            res_y=f"{MockScreen.height}",
+        assert display_info.all() == dict(
+            resolution=({MockScreen.width}, {MockScreen.height}),
+            offset_x=MockScreen.mouse_x,
+            offset_y=MockScreen.mouse_y,
+            res_x=MockScreen.width,
+            res_y=MockScreen.height,
         )
