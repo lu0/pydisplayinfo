@@ -2,8 +2,6 @@ import tkinter
 from tkinter import Tk
 from typing import Tuple
 
-from tests.utils import get_mouse
-
 DEFAULT_WIDTH = 150
 DEFAULT_HEIGHT = 200
 DEFAULT_X = 100
@@ -83,7 +81,7 @@ class _HelperWindow(Tk):
         self._make_fullscreen()
 
     def _move_to_mouse_location(self) -> None:
-        mouse_location: Tuple[int, int] = get_mouse()
+        mouse_location: Tuple[int, int] = self.winfo_pointerxy()
         self.__move(*mouse_location)
 
     def __move(self, x: int, y: int) -> None:
