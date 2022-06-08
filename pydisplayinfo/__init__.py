@@ -9,4 +9,5 @@
 :license: GPLv3.
 """
 
+from ._helper_window import _HelperWindow
 from .display_info import DisplayInfo
