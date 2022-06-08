@@ -2,6 +2,8 @@ import tkinter
 from tkinter import Tk
 from typing import Tuple
 
+from tests.utils import get_mouse
+
 DEFAULT_WIDTH = 150
 DEFAULT_HEIGHT = 200
 DEFAULT_X = 100
@@ -26,6 +28,7 @@ class _HelperWindow(Tk):
         """
 
         self.__create_window()
+        self.__remove_decorations()
         self.__initial_dimensions = (width, height)
         self.__initial_position = (x, y)
         self._reset_geometry()
@@ -41,60 +44,58 @@ class _HelperWindow(Tk):
         super().__init__()
 
     @property
-    def initial_dimensions(self) -> Tuple[int, int]:
-        """Get initial width and height of the window
+    def windowing_system(self) -> str:
+        # TODO: Make enum of windowing systems
+        # TODO: Test on windows
+        # TODO: Test on wayland
+        return self.tk.call("tk", "windowingsystem")
 
-        Usage:
-        >>> window = _HelperWindow()
-        >>> window.initial_dimensions
-        (150, 200)
-        """
+    def __remove_decorations(self) -> None:
+        if self.windowing_system == "x11":
+            self.attributes("-type", "splash")
+        else:
+            self.overrideredirect(True)
+        self.update_idletasks()
+
+    @property
+    def initial_dimensions(self) -> Tuple[int, int]:
+        """Get initial width and height of the window"""
         return self.__initial_dimensions
 
     @property
     def initial_position(self) -> Tuple[int, int]:
-        """Get initial x and y coordinates of the window
-
-        Usage:
-        >>> window = _HelperWindow()
-        >>> window.initial_position
-        (100, 120)
-        """
+        """Get initial x and y coordinates of the window"""
         return self.__initial_position
 
     def _reset_geometry(self) -> None:
-        """Set geometry to the size and position defined during instantiation
-
-        Usage:
-        >>> window = _HelperWindow()
-        >>> window._reset_geometry()
-        >>> window.geometry()
-        '150x200+100+120'
-        """
+        """Set geometry to the size and position defined during instantiation"""
         self.__set_geometry(*self.initial_dimensions, *self.initial_position)
 
     def __set_geometry(self, width: int, height: int, x: int, y: int) -> None:
         self.geometry(f"{width}x{height}+{x}+{y}")
         self.update_idletasks()
 
-    def update(self) -> None:
+    def expand_in_current(self) -> None:
         """Expand window across the current display"""
         self._move_to_mouse_location()
         self._make_fullscreen()
 
     def _move_to_mouse_location(self) -> None:
-        mouse_location: Tuple[int, int] = self.winfo_pointerxy
+        mouse_location: Tuple[int, int] = get_mouse()
         self.__move(*mouse_location)
 
     def __move(self, x: int, y: int) -> None:
-        current_width: int = self.winfo_width
-        current_height: int = self.winfo_height
+        current_width: int = self.winfo_width()
+        current_height: int = self.winfo_height()
         self.__set_geometry(current_width, current_height, x, y)
 
     def _make_fullscreen(self) -> None:
-        self.attributes("-zoomed", True)
-        self.attributes("-fullscreen", True)
-        self.update_idletasks()
+        if self.windowing_system == "x11":
+            self.attributes("-type", "normal")
+            self.attributes("-fullscreen", True)
+        else:
+            self.attributes("-zoomed", True)
+        self.update()
 
     def __resize(self, width: int, height: int) -> None:
         current_x: int = self.winfo_x
