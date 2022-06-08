@@ -55,6 +55,7 @@ class _HelperWindow(Tk):
             self.attributes("-type", "splash")
         else:
             self.overrideredirect(True)
+        self.state("iconic")
         self.update_idletasks()
 
     @property
@@ -77,6 +78,7 @@ class _HelperWindow(Tk):
 
     def expand_in_current(self) -> None:
         """Expand window across the current display"""
+        self._reset_geometry()
         self._move_to_mouse_location()
         self._make_fullscreen()
 
