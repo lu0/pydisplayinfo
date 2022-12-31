@@ -8,6 +8,8 @@ Work In Progress 🤔
 
 Install dependencies
 ```sh
+sudo apt update && \
+sudo apt install -y make && \
 make init
 ```
 
