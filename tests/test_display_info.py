@@ -29,6 +29,6 @@ class TestDisplayInfo:
             resolution=({MockScreen.width}, {MockScreen.height}),
             offset_x=MockScreen.mouse_x,
             offset_y=MockScreen.mouse_y,
-            res_x=MockScreen.width,
-            res_y=MockScreen.height,
+            width=MockScreen.width,
+            height=MockScreen.height,
         )
